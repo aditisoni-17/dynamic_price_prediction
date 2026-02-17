@@ -1,58 +1,21 @@
 🚖 Taxi Fare Prediction
-
 Decision Tree & PyTorch Neural Network Implementation
-
 📌 Project Overview
 
-This project builds two machine learning models to predict taxi fare amounts using the NYC Yellow Taxi Trip Data (March 2016) dataset:
+This project builds and compares two machine learning models to predict taxi fare amounts using the NYC Yellow Taxi Trip Data (March 2016) dataset:
 
-Decision Tree Regressor (Scikit-learn)
+🌳 Decision Tree Regressor (Scikit-learn)
 
-Neural Network (PyTorch)
+🧠 Neural Network (PyTorch)
 
-The goal is to predict fare_amount based on trip distance, passenger details, time features, and pickup/dropoff locations.
+The objective is to predict fare_amount using trip distance, time features, passenger information, and geographic coordinates.
 
-Dataset Source:
-NYC Yellow Taxi Trip Data (March 2016)
+📊 Dataset Information
 
-📊 Dataset Description
+Dataset: NYC Yellow Taxi Trip Data (March 2016)
+Records: ~12 Million Trips
 
-The dataset contains over 12 million taxi trip records including:
-
-Trip distance
-
-Passenger count
-
-Pickup & dropoff coordinates
-
-Payment type
-
-Rate code
-
-Fare amount
-
-Timestamp information
-
-🧹 Data Cleaning Steps
-
-Removed duplicate rows
-
-Removed invalid records:
-
-fare_amount <= 0 or fare_amount >= 200
-
-trip_distance <= 0 or trip_distance >= 100
-
-Extracted datetime features:
-
-pickup_hour
-
-pickup_day
-
-pickup_month
-
-🧠 Model 1: Decision Tree Regressor
-Features Used
+Key Columns Used
 
 trip_distance
 
@@ -62,53 +25,67 @@ RatecodeID
 
 payment_type
 
+pickup_longitude, pickup_latitude
+
+dropoff_longitude, dropoff_latitude
+
+fare_amount
+
+Pickup datetime features
+
+🧹 Data Cleaning & Feature Engineering
+✔ Cleaning Steps
+
+Removed duplicate records
+
+Removed invalid values:
+
+fare_amount <= 0 or fare_amount >= 200
+
+trip_distance <= 0 or trip_distance >= 100
+
+⏳ Time-Based Features Extracted
+
 pickup_hour
 
 pickup_day
 
 pickup_month
 
-pickup_longitude
+These features help capture demand patterns and pricing variations.
 
-pickup_latitude
-
-dropoff_longitude
-
-dropoff_latitude
-
-Model Configuration
-
-DecisionTreeRegressor
+🌳 Model 1 — Decision Tree Regressor
+⚙ Configuration
 
 max_depth = 10
 
 random_state = 42
 
-80/20 train-test split
+Train/Test Split: 80% / 20%
 
-📈 Results
+📈 Performance
+Metric	Value
+MAE	$1.25
+R² Score	0.9541
+🔍 Feature Importance
+Feature	Importance
+trip_distance	~94.7%
+RatecodeID	~3.7%
+Others	< 1%
 
-MAE: $1.25
+📌 Insight: Taxi fare is heavily distance-driven.
 
-R² Score: 0.9541
+🧠 Model 2 — PyTorch Neural Network
+🏗 Architecture
+Input (11 features)
+      ↓
+Linear (64) + ReLU
+      ↓
+Linear (32) + ReLU
+      ↓
+Output (1)
 
-🔎 Feature Importance
-
-The most important feature was:
-
-trip_distance (~94.7%)
-
-This shows fare is primarily distance-based.
-
-🧠 Model 2: PyTorch Neural Network
-Architecture
-
-Input Layer (11 features)
-→ Hidden Layer (64 neurons, ReLU)
-→ Hidden Layer (32 neurons, ReLU)
-→ Output Layer (1 neuron)
-
-Training Configuration
+⚙ Training Setup
 
 Loss Function: MSELoss
 
@@ -120,83 +97,83 @@ Epochs: 100
 
 Batch Size: 32
 
-Feature scaling: StandardScaler
+Feature Scaling: StandardScaler
 
-Evaluation Metrics
+📊 Evaluation Metrics
 
 Mean Absolute Error (MAE)
 
 R² Score
 
-⚡ Dynamic Pricing Insight
+⚡ Real-World Dynamic Pricing
 
-Real-world ride-hailing platforms like Uber use much more advanced pricing systems. Factors include:
+Modern ride-hailing platforms use advanced pricing strategies based on:
 
-Time of day (rush hour)
+⏰ Time of day (rush hour)
 
-Weather conditions
+🌧 Weather conditions
 
-Special events
+🎉 Special events
 
-Real-time supply & demand
+📍 Real-time supply & demand
 
-Traffic congestion
+🚦 Traffic congestion
 
-Surge pricing algorithms
+📈 Surge pricing algorithms
 
-Our model predicts base fare using historical trip data but does not include live demand-based pricing.
+This project predicts base fare using historical structured data, not real-time surge pricing.
 
-🛠 Technologies Used
+🛠 Tech Stack
 
 Python
 
 Pandas
 
+NumPy
+
 Scikit-learn
 
 PyTorch
 
-NumPy
+KaggleHub
 
 🚀 How to Run
-
-Install dependencies:
-
+1️⃣ Install Dependencies
 pip install pandas numpy scikit-learn torch kagglehub
 
+2️⃣ Download Dataset
 
-Download the dataset from Kaggle.
+Download March 2016 taxi data from Kaggle.
 
-Run the notebook cells in order:
+3️⃣ Run Notebook
 
-Data loading
+Execute cells in order:
+
+Data Loading
 
 Cleaning
 
-Feature engineering
+Feature Engineering
 
-Model training
+Model Training
 
 Evaluation
 
-📌 Key Learnings
+📌 Key Takeaways
 
-Distance is the strongest predictor of taxi fare.
+✔ Distance dominates fare prediction
+✔ Decision Trees perform extremely well on tabular data
+✔ Neural Networks require scaling & tuning
+✔ Cleaning outliers significantly improves performance
 
-Tree-based models perform very well on structured tabular data.
+🔮 Future Improvements
 
-Neural networks require scaling and more tuning.
+Add weather API data
 
-Data cleaning significantly improves model accuracy.
+Include real-time traffic estimates
 
-📚 Future Improvements
-
-Add weather data
-
-Include traffic APIs
-
-Use ensemble models (Random Forest, XGBoost)
+Use ensemble models (Random Forest / XGBoost)
 
 Hyperparameter tuning
 
-Deploy as a web app
+Deploy as a web application
